@@ -1,3 +1,44 @@
+*{
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+}
+
+a {
+  color: #000;
+}
+header {
+  text-align: center;
+  min-height: 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-bottom: 2px solid #000;
+}
+
+header a {
+  text-decoration: none;
+}
+
+header a h1 {
+  font-size: 4rem;
+}
+
+
+#root {
+  min-height: 100%;
+  flex: 1;
+}
+
+
+
+
 .App {
   text-align: center;
 }
@@ -35,4 +76,142 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.hidden {
+  display: none;
+}
+
+.section--row {
+  display: flex;
+  flex-flow: columnyy;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+
+
+div.App {
+  display: flex;
+  min-height: 100%;
+}
+
+
+.section--sidebar {
+  flex:1;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  min-height: 100%;
+  padding: 1.5rem 0 0 0;
+}
+.section--sidebar ul{
+  width: 100%;
+  padding: 0px;
+  margin:0px;
+  list-style: none;
+}
+li.folder--item {
+  width: 100%;
+  flex: 0 1;
+  padding: 1.5rem;
+  border: 2px solid #000;
+}
+li.folder--item a {
+  font-size: 1.5rem;
+}
+.button--back {
+  width: calc(100% - 1rem);
+  font-size: 1.5rem;
+  background: none;
+  box-shadow: none;
+  border: 2px solid #000;
+  margin:0 0.5rem;
+  padding:1.5rem;
+  cursor: pointer;
+}
+.folder--item--add {
+  width: calc(100% - 1rem);
+  font-size: 1.5rem;
+  background: none;
+  box-shadow: none;
+  border: 2px solid #000;
+  margin:0.5rem;
+  padding:1.5rem;
+  cursor: pointer;
+}
+.folder--item--checked a{
+  color: #fff;
+}
+.folder--item--checked {
+  background-color: #06e;
+  border: 2px solid #06e;
+}
+.section--sidebar h3 {
+  width: 100%;
+  text-align: right;
+  font-weight: 400;
+  font-size: 1.75rem;
+}
+
+.section--main {
+  flex:3;
+  padding: 1.5rem;
+}
+.section--main ul{
+  width: 100%;
+  padding: 0px;
+  margin:0px;
+  list-style: none;
+}
+li.note--item {
+  width: 100%;
+  flex: 0 1;
+  padding: 1.5rem;
+  margin: 0 0 1rem 0;
+  border: 2px solid #000;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+main > .section--row {
+  justify-content: flex-start;
+}
+.note--item--link {
+  width: 100%;
+  font-size: 2rem;
+}
+.note--item--modified {
+  width: 100%;
+  font-size: 1.25rem;
+  margin: 0;
+  flex: 1
+}
+.note--item--delete {
+  flex: 0 0 auto;
+  padding: 1rem;
+  margin: 0.5rem 1rem;
+  background: none;
+  box-shadow: none;
+  border: 2px solid #000;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+.note--item--add {
+  font-size: 1.5rem;
+  min-width: 275px;
+  background: none;
+  box-shadow: none;
+  border: 2px solid #000;
+  padding:1rem;
+  cursor: pointer;
+}
+.note--item--content {
+  text-align: left;
+  margin: 0.5rem;
 }
