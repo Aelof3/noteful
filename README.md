@@ -96,3 +96,52 @@ The folder route:
 
 - Instead of using `Link` components in the sidebar for each folder, you can use the React-Router `NavLink` component that will automatically add a `className` of `"active"` when appropriate.
 - You'll need to filter for the notes that contain a matching `folderId` to the folder that's selected when deciding which notes to display.
+
+
+
+For this assignment, you'll refactor your noteful project to use React context for displaying folders and notes. Once you've refactored to context, you'll implement an API request for fetching the folders and notes. You'll also implement the delete buttons to make API calls and update context accordingly.
+
+#### Requirements
+
+1. Refactor your Noteful application to use context instead of prop-drilling.
+2. Implement two fetch requests to two endpoints when the application mounts: /folders and /notes. Store the response from these requests using a setState in whichever component you were keeping your dummy state.
+3. Implement the delete button for each note in the list in the main route and folder route.
+4. Implement the delete button on the note page, if the delete is successful, redirect to the / path.
+5. The API calls will be made to a local server called noteful-json-server that you'll need to have running separately to your noteful React application.
+> You aren't required to implement the "add-folder" or "add-note" forms just yet.
+
+This assignment combines many advanced concepts from previous checkpoints so take your time! It should take about 2 hours to complete. If you're having trouble, attend a Q&A session or reach out on Slack for help!
+
+#### Noteful JSON server
+
+To get your local copy of the noteful API, clone this project into your local projects folder.
+```bash
+git clone https://github.com/tomatau/noteful-json-server
+cd ./noteful-json-server
+npm install
+npm start
+# Ctrl-c to close the server
+```
+- You can see documentation for the JSON-server once it's started by visiting `http://localhost:9090`.
+- You can see all of the data currently stored in the server by visiting `http://localhost:9090/db`.
+- To fetch the notes and folders, you should make two GET requests:
+    - http://localhost:9090/folders
+    - http://localhost:9090/notes
+
+To delete notes, make a DELETE request to the `/notes/<note-id>` endpoint.
+
+#### Hints
+
+- You'll be able to swap the render props in your Route components for component props as the nested components can read the values from context directly.
+- You may need to swap some function components for class components so that you can read context (or use Context.Consumer components with render props).
+- To add the content type header in fetch requests you can pass in an "init" object with settings. Here's an example for a DELETE request:
+```javascript
+fetch(`http://localhost:1234/foo/${fooId}`, {
+  method: 'DELETE',
+  headers: {
+    'content-type': 'application/json'
+  },
+})
+```
+- You can implement the DELETE request in the component that owns the delete button, and then use a callback context value to update the state in your top level component.
+- After making a successful DELETE request, you can use a `this.state.notes.filter` method along with `setState` to remove a note from state and update context.

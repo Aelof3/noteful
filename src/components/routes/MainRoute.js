@@ -16,10 +16,12 @@ class MainRoute extends Component {
                 <SidebarSection 
                     store={this.props.store}
                     path={this.props.path}
+                    history={this.props.history}
                 />
                 <MainSection 
                     store={this.props.store}
                     path={this.props.path}
+                    history={this.props.history}
                 />
 
             </div>

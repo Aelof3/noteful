@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import NoteItem from '../NoteItem';
+import DefaultContext from '../context/DefaultContext';
 
 class MainSection extends Component {
+    static contextType = DefaultContext;
+
     getNoteList = () => {
         if ( typeof this.props.store !== "object" ) return;
         
@@ -16,6 +19,7 @@ class MainSection extends Component {
                     modified={note.modified}
                     folderId={note.folderId}
                     content={note.content}
+                    history={this.props.history}
                 />
             );
         });

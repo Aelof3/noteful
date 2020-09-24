@@ -20,10 +20,12 @@ class NoteRoute extends Component {
                 <SidebarSection 
                     store={store}
                     path={this.props.path}
+                    history={this.props.history}
                 />
                 <MainSection 
                     store={store}
                     path={this.props.path}
+                    history={this.props.history}
                 />
 
             </div>
