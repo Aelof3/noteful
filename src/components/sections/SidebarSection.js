@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import FolderItem from '../FolderItem';
-import FolderRoute from '../routes/FolderRoute';
+import DefaultContext from '../context/DefaultContext';
 
 class SidebarSection extends Component {
+    static contextType = DefaultContext;
     getFolderList = () => {
-        if ( typeof this.props.store !== "object" || this.props.path.includes("/note/") ) return;
+        if ( typeof this.props.store !== "object" || this.props.history.location.pathname.includes("/note/") ) return;
 
         return this.props.store.folders.map(folder => {
             return (
@@ -13,13 +14,22 @@ class SidebarSection extends Component {
                     key={folder.id}
                     id={folder.id}
                     name={folder.name}
-                    path={this.props.path}
+                    history={this.props.history}
                 />
             );
         });
     }
     getBottomButton = () => {
-        if ( !this.props.path.includes("/note/") ) return (<button className="folder--item--add">Add folder</button>);
+        if ( !this.props.history.location.pathname.includes("/note/") ) {
+            return (
+            <Link 
+                to={`/addfolder/`}
+                className="folder--item--add"
+            >
+                Add Folder
+            </Link>);
+        }
+
         return (<Link 
                     to={`/`}
                     className="button--back"
@@ -29,7 +39,7 @@ class SidebarSection extends Component {
         );
     }
     getFolderName = () => {
-        if (this.props.path.includes("/note/")) {
+        if (this.props.history.location.pathname.includes("/note/")) {
             let folder = this.props.store.folders.find( folder => {
                 return folder.id === this.props.store.notes[0].folderId
             } );

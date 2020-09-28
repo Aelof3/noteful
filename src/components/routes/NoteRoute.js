@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import HeaderSection from '../sections/HeaderSection';
 import MainSection from '../sections/MainSection';
 import SidebarSection from '../sections/SidebarSection';
 
 class NoteRoute extends Component {
-    state = {
-        name: "Note"
-    }
-
     render(){
         const store = {
-            notes: this.props.store.notes.filter( note => this.props.path.includes(note.id) ),
+            notes: this.props.store.notes.filter( note => this.props.history.location.pathname.includes(note.id) ),
             folders: this.props.store.folders
         }
         return (
@@ -19,12 +13,10 @@ class NoteRoute extends Component {
                               
                 <SidebarSection 
                     store={store}
-                    path={this.props.path}
                     history={this.props.history}
                 />
                 <MainSection 
                     store={store}
-                    path={this.props.path}
                     history={this.props.history}
                 />
 

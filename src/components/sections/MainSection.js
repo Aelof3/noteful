@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NoteItem from '../NoteItem';
 import DefaultContext from '../context/DefaultContext';
 
@@ -14,7 +14,6 @@ class MainSection extends Component {
                 <NoteItem
                     key={note.id}
                     id={note.id}
-                    path={this.props.path}
                     name={note.name}
                     modified={note.modified}
                     folderId={note.folderId}
@@ -25,7 +24,14 @@ class MainSection extends Component {
         });
     }
     getBottomContents = () => {
-        if ( !this.props.path.includes(`/note/`) ) return (<button className="note--item--add">Add note</button>);
+        if ( !this.props.history.location.pathname.includes(`/note/`) ) return (
+            <Link 
+                to={`/addnote/`}
+                className="note--item--add"
+            >
+                Add Note
+            </Link>
+        );
         return (<p className="note--item--content">{this.props.store.notes[0].content}</p>);
     }
     render(){
