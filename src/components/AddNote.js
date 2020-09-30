@@ -3,11 +3,12 @@ import SidebarSection from './sections/SidebarSection';
 import DefaultContext from './context/DefaultContext';
 import { withRouter } from 'react-router-dom';
 import ErrorBoundary from '../errors/ErrorBoundary';
+import PropTypes from 'prop-types';
 
 class AddNote extends Component {
     static contextType = DefaultContext;
     addNote = (data) => {
-        fetch(`http://localhost:9090/notes/`, {
+        fetch(`${this.context.url}/notes/`, {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
@@ -20,7 +21,6 @@ class AddNote extends Component {
         });
     }
     handleOnSumbit = (form) => {
-        console.log(form);
         let f = new FormData(form);
         let data = {
             name: f.get("noteName"),
@@ -47,13 +47,13 @@ class AddNote extends Component {
     render() {
         return (
             <div className="App">
-                <ErrorBoundary message="Sidebar Error">
+                <ErrorBoundary message="Sidebar Section Error">
                     <SidebarSection 
                         store={this.props.store}
                         history={this.props.history}
                     />
                 </ErrorBoundary>
-                <ErrorBoundary message="Sidebar Error">
+                <ErrorBoundary message="Main Section Error">
                     <main className="section--main">
                         <form
                             className="add--form"
@@ -85,6 +85,10 @@ class AddNote extends Component {
             </div>
         )
     }
+}
+
+AddNote.propTypes = {
+    store: PropTypes.object.isRequired
 }
 
 export default withRouter(AddNote);

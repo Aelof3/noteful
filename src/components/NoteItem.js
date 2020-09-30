@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import DefaultContext from './context/DefaultContext';
+import PropTypes from 'prop-types';
 
 class NoteItem extends Component {
     static contextType = DefaultContext;
     deleteNote = () => {
-        fetch(`http://localhost:9090/notes/${this.props.id}`, {
+        fetch(`${this.context.url}/notes/${this.props.id}`, {
             method: 'DELETE',
             headers: {
               'content-type': 'application/json'
@@ -41,6 +42,15 @@ class NoteItem extends Component {
             </li>
        );
     }
+}
+
+NoteItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    modified: PropTypes.string.isRequired,
+    folderId: PropTypes.string.isRequired,
+    content: PropTypes.string,
+    store: PropTypes.object.isRequired
 }
 
 export default withRouter(NoteItem);

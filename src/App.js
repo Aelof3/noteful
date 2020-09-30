@@ -17,14 +17,15 @@ class App extends Component {
     store: {
       folders: [],
       notes: []
-    }
+    },
+    url: 'http://localhost:9090'
   }
   updateStore = () => {
     this.getFolders();
     this.getNotes();
   }
   getFolders = () => {
-    fetch(`http://localhost:9090/folders`)
+    fetch(`${this.state.url}/folders`)
       .then( r=>r.json())
       .then( r=>{
         this.setState({
@@ -36,7 +37,7 @@ class App extends Component {
       })
   }
   getNotes = () => {
-    fetch(`http://localhost:9090/notes`)
+    fetch(`${this.state.url}/notes`)
       .then( r=>r.json())
       .then( r=>{
         this.setState({
@@ -52,13 +53,14 @@ class App extends Component {
   }
   render(){
     const contextValue = {
-      updateStore: this.updateStore
+      updateStore: this.updateStore,
+      url: this.state.url
     }
 
     return (
       <DefaultContext.Provider value={contextValue}>
           <BrowserRouter >
-            <HeaderSection store={this.state.store}/>
+            <HeaderSection />
             <Switch>
               <Route 
                 exact path='/'

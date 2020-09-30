@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import DefaultContext from './context/DefaultContext';
+import PropTypes from 'prop-types';
 
 class FolderItem extends Component {
     static contextType = DefaultContext;
 
     deleteNote = (id) => {
-        fetch(`http://localhost:9090/notes/${id}`, {
+        fetch(`${this.context.url}/notes/${id}`, {
             method: 'DELETE',
             headers: {
               'content-type': 'application/json'
@@ -17,7 +18,7 @@ class FolderItem extends Component {
           });
     }
     deleteFolder = (id) => {
-        fetch(`http://localhost:9090/folders/${id}`, {
+        fetch(`${this.context.url}/folders/${id}`, {
             method: 'DELETE',
             headers: {
               'content-type': 'application/json'
@@ -53,6 +54,12 @@ class FolderItem extends Component {
             </li>
        );
     }
+}
+
+FolderItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    store: PropTypes.object.isRequired
 }
 
 export default withRouter(FolderItem);

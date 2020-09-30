@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import NoteItem from '../NoteItem';
 import DefaultContext from '../context/DefaultContext';
+import PropTypes from 'prop-types';
 
 class MainSection extends Component {
     static contextType = DefaultContext;
@@ -45,6 +46,10 @@ class MainSection extends Component {
             </main>
        );
     }
+}
+
+MainSection.propTypes = {
+    store: PropTypes.object.isRequired
 }
 
 export default withRouter(MainSection);

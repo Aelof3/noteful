@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import FolderItem from '../FolderItem';
 import DefaultContext from '../context/DefaultContext';
+import PropTypes from 'prop-types';
 
 class SidebarSection extends Component {
     static contextType = DefaultContext;
@@ -58,6 +59,10 @@ class SidebarSection extends Component {
             </section>
        );
     }
+}
+
+SidebarSection.propTypes = {
+    store: PropTypes.object.isRequired
 }
 
 export default withRouter(SidebarSection);

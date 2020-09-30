@@ -3,17 +3,17 @@ import SidebarSection from './sections/SidebarSection';
 import DefaultContext from './context/DefaultContext';
 import { withRouter } from 'react-router-dom';
 import ErrorBoundary from '../errors/ErrorBoundary';
+import PropTypes from 'prop-types';
 
 class AddFolder extends Component {
     static contextType = DefaultContext;
     handleOnSumbit = (form) => {
-        console.log(form);
         let f = new FormData(form);
         let name = f.get("folderName");
         this.addFolder({name:name});
     }
     addFolder = (data) => {
-        fetch(`http://localhost:9090/folders/`, {
+        fetch(`${this.context.url}/folders/`, {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
@@ -54,6 +54,10 @@ class AddFolder extends Component {
             </div>
         )
     }
+}
+
+AddFolder.propTypes = {
+    store: PropTypes.object.isRequired
 }
 
 export default withRouter(AddFolder);

@@ -3,6 +3,7 @@ import MainSection from '../sections/MainSection';
 import SidebarSection from '../sections/SidebarSection';
 import { withRouter } from 'react-router-dom';
 import ErrorBoundary from '../../errors/ErrorBoundary';
+import PropTypes from 'prop-types';
 
 class FolderRoute extends Component {
     render(){
@@ -27,6 +28,10 @@ class FolderRoute extends Component {
             </div>
        );
     }
+}
+
+FolderRoute.propTypes = {
+    store: PropTypes.object.isRequired
 }
 
 export default withRouter(FolderRoute);
