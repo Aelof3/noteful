@@ -1,4 +1,7 @@
-# Assignment
+# Part 1  
+___  
+
+### Assignment
 You're going to build an application called **Noteful**. This application will be built up over several checkpoints as we first create the design and basic components with routing, and then move onto integrating the API calls. We'll also be building the back-end for this application in the Node curriculum!
 
 To start, create a new `create-react-app` project called `noteful` and remove the boilerplate code to have a clean starting point.
@@ -102,6 +105,7 @@ ___
 ___
 
 # Part 2
+___
 
 ### Assignment
 For this assignment, you'll refactor your `noteful` project to use React context for displaying folders and notes. Once you've refactored to context, you'll implement an API request for fetching the folders and notes. You'll also implement the delete buttons to make API calls and update context accordingly.
@@ -159,6 +163,7 @@ ___
 ___
 
 # Part 3
+___
 
 ### Assignment
 In this assignment you will build upon the Noteful application that you started in the previous lesson. You will add two forms for POSTing new folders and new Notes to the server. You will also add error boundaries at appropriate places in the structure. Finally you will refactor the components to use PropTypes to validate the props.
