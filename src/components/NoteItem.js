@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import DefaultContext from './context/DefaultContext';
 
 class NoteItem extends Component {
     static contextType = DefaultContext;
+    deleteNote = () => {
+        fetch(`http://localhost:9090/notes/${this.props.id}`, {
+            method: 'DELETE',
+            headers: {
+              'content-type': 'application/json'
+            },
+          })
+          .then( r=>{
+            this.context.updateStore();
+            this.props.history.push('/');
+          });
+    }
     render(){
         const { id, name, modified, folderId, content, history } = this.props;
         const d = new Date(modified);
@@ -19,11 +31,7 @@ class NoteItem extends Component {
                 <div className="section--row">
                     <p className="note--item--modified">{`Date modified on ${d.toLocaleString()}`}</p>
                     <button 
-                        onClick={e=>{
-                            this.context.deleteNote(id, ()=>{
-                                history.push('/');
-                            });
-                        }}
+                        onClick={this.deleteNote}
                         className="note--item--delete"
                     >
                         Delete Note
@@ -35,4 +43,4 @@ class NoteItem extends Component {
     }
 }
 
-export default NoteItem;
+export default withRouter(NoteItem);

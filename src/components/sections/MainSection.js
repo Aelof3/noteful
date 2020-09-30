@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import NoteItem from '../NoteItem';
 import DefaultContext from '../context/DefaultContext';
 
@@ -18,7 +18,6 @@ class MainSection extends Component {
                     modified={note.modified}
                     folderId={note.folderId}
                     content={note.content}
-                    history={this.props.history}
                 />
             );
         });
@@ -26,7 +25,7 @@ class MainSection extends Component {
     getBottomContents = () => {
         if ( !this.props.history.location.pathname.includes(`/note/`) ) return (
             <Link 
-                to={`/addnote/`}
+                to={`/add-note/`}
                 className="note--item--add"
             >
                 Add Note
@@ -48,4 +47,4 @@ class MainSection extends Component {
     }
 }
 
-export default MainSection;
+export default withRouter(MainSection);

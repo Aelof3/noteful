@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import FolderRoute from './components/routes/FolderRoute';
 import MainRoute from './components/routes/MainRoute';
@@ -8,19 +8,25 @@ import AddFolder from './components/AddFolder';
 import AddNote from './components/AddNote';
 import HeaderSection from './components/sections/HeaderSection';
 import DefaultContext from './components/context/DefaultContext';
-import store from './dummy-store';
 
 class App extends Component {
+  
   static contextType = DefaultContext;
+
   state = {
-    store: store,
-    url: 'http://localhost:9090'
+    store: {
+      folders: [],
+      notes: []
+    }
   }
-  getFolders = (callback) => {
-    fetch(`${this.state.url}/folders`)
+  updateStore = () => {
+    this.getFolders();
+    this.getNotes();
+  }
+  getFolders = () => {
+    fetch(`http://localhost:9090/folders`)
       .then( r=>r.json())
       .then( r=>{
-        if ( typeof callback === "function" ) callback(this.state.store);
         this.setState({
           store: {
             folders: r,
@@ -29,11 +35,10 @@ class App extends Component {
         });
       })
   }
-  getNotes = (callback) => {
-    fetch(`${this.state.url}/notes`)
+  getNotes = () => {
+    fetch(`http://localhost:9090/notes`)
       .then( r=>r.json())
       .then( r=>{
-        if ( typeof callback === "function" ) callback(this.state.store);
         this.setState({
           store: {
             folders: this.state.store.folders,
@@ -42,131 +47,52 @@ class App extends Component {
         });
       })
   }
-  deleteNote = (id, callback) => {
-    fetch(`${this.state.url}/notes/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json'
-        },
-      })
-      .then( r=>{
-        this.getNotes(callback);
-      });
-  }
-  deleteFolder = (id,callback) => {
-    fetch(`${this.state.url}/folders/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json'
-        },
-      })
-      .then( r => {
-        this.getNotes(callback);
-      } );
-  }
-  addNote = (data, callback) => {
-    fetch(`${this.state.url}/notes/`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then( r=>{
-        this.getNotes(callback);
-      });
-  }
-  addFolder = (data,callback) => {
-    fetch(`${this.state.url}/folders/`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then( r => {
-        this.getFolders(callback);
-      } );
-  }
   componentDidMount(){
-    this.getFolders();
-    this.getNotes();
+    this.updateStore();
   }
   render(){
     const contextValue = {
-      getNotes: this.getNotes,
-      getFolders: this.getFolders,
-      deleteFolder: this.deleteFolder,
-      deleteNote: this.deleteNote,
-      addFolder: this.addFolder,
-      addNote: this.addNote,
+      updateStore: this.updateStore
     }
 
     return (
       <DefaultContext.Provider value={contextValue}>
-          <HeaderSection 
-              store={this.state.store}
-          />
-          <Route 
-            exact path='/'
-            render={({history})=>{
-                return ( 
-                  <MainRoute 
-                    history={history} 
-                    store={this.state.store} 
-                  />
-                )
-              }
-            }
-          />
-          <Route 
-            path='/folder/:folderId'
-            render={({history})=>{
-                return ( 
-                  <FolderRoute 
-                    history={history} 
-                    store={this.state.store} 
-                  />
-                )
-              }
-            }
-          />
-          <Route 
-            path='/addfolder/'
-            render={({history})=>{
-                return ( 
-                  <AddFolder 
-                    history={history} 
-                    store={this.state.store} 
-                  />
-                )
-              }
-            }
-          />
-          <Route 
-            path='/note/:id'
-            render={({history})=>{
-                return ( 
-                  <NoteRoute 
-                    history={history} 
-                    store={this.state.store} 
-                  />
-                )
-              }
-            }
-          />
-          <Route 
-            path='/addnote/'
-            render={({history})=>{
-                return ( 
-                  <AddNote 
-                    history={history} 
-                    store={this.state.store} 
-                  />
-                )
-              }
-            }
-          />
+          <BrowserRouter >
+            <HeaderSection store={this.state.store}/>
+            <Switch>
+              <Route 
+                exact path='/'
+                render={()=><MainRoute store={this.state.store}/>}
+              />
+              <Route 
+                path='/folder/:folderId'
+                render={()=><FolderRoute store={this.state.store}/>}
+              />
+              <Route 
+                path='/note/:id'
+                render={()=><NoteRoute store={this.state.store}/>}
+              />
+              <Route 
+                path='/add-folder/'
+                render={()=><AddFolder store={this.state.store}/>}
+              />
+              <Route 
+                path='/add-note/'
+                render={()=><AddNote store={this.state.store}/>}
+              />
+              <Route 
+                render={()=>{
+                    return (
+                      <div class="error">
+                        <div class="error--spacer"></div>
+                        <h2 class="error--message">404 Not Found</h2>
+                      </div>
+                    )
+                  }
+                }
+              />
+            </Switch>
+        </BrowserRouter>
       </DefaultContext.Provider>
     );
   }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SidebarSection from './sections/SidebarSection';
 import DefaultContext from './context/DefaultContext';
+import { withRouter } from 'react-router-dom';
+import ErrorBoundary from '../errors/ErrorBoundary';
 
 class AddFolder extends Component {
     static contextType = DefaultContext;
@@ -8,34 +10,50 @@ class AddFolder extends Component {
         console.log(form);
         let f = new FormData(form);
         let name = f.get("folderName");
-        this.context.addFolder({name:name},()=>{
-            this.props.history.push("/")
-        });
+        this.addFolder({name:name});
+    }
+    addFolder = (data) => {
+        fetch(`http://localhost:9090/folders/`, {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then( r => {
+            this.context.updateStore();
+            this.props.history.push('/');
+        } );
     }
     render() {
         return (
             <div className="App">
-              
-                <SidebarSection 
-                    store={this.props.store}
-                    history={this.props.history}
-                />
-                <main className="section--main">
-                    <form
-                        className="add--form"
-                        onSubmit={(e)=>{
-                            e.preventDefault();
-                            this.handleOnSumbit(e.target);
-                        }}
-                    >   
-                        <label htmlFor="folderName">Folder name:</label>
-                        <input type="text" id="folderName" name="folderName" />
-                        <button type="submit">Submit</button>
-                    </form>
-                </main>
+                <ErrorBoundary message="Sidebar Section Error">
+                    <SidebarSection 
+                        store={this.props.store}
+                        history={this.props.history}
+                    />
+                </ErrorBoundary>
+                <ErrorBoundary message="Main Section Error">
+                    <main className="section--main">
+                        <form
+                            className="add--form"
+                            onSubmit={(e)=>{
+                                e.preventDefault();
+                                this.handleOnSumbit(e.target);
+                            }}
+                        >   
+                            <div className="add--form--field">
+                                <label htmlFor="folderName">Folder name:</label>
+                                <input type="text" id="folderName" name="folderName" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </main>
+                </ErrorBoundary>
             </div>
         )
     }
 }
 
-export default AddFolder;
+export default withRouter(AddFolder);

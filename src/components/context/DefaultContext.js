@@ -1,12 +1,7 @@
 import React from 'react';
 
 const DefaultContext = React.createContext({
-    getNotes: () => {},
-    getFolders: () => {},
-    deleteNote: () => {},
-    deleteFolder: () => {},
-    addNote: () => {},
-    addFolder: () => {},
-  })
+    updateStore: () => {},
+})
 
-export default DefaultContext
+export default DefaultContext;

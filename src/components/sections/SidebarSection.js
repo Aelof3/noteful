@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import FolderItem from '../FolderItem';
 import DefaultContext from '../context/DefaultContext';
 
@@ -7,14 +7,13 @@ class SidebarSection extends Component {
     static contextType = DefaultContext;
     getFolderList = () => {
         if ( typeof this.props.store !== "object" || this.props.history.location.pathname.includes("/note/") ) return;
-
         return this.props.store.folders.map(folder => {
             return (
                 <FolderItem
                     key={folder.id}
                     id={folder.id}
                     name={folder.name}
-                    history={this.props.history}
+                    store={this.props.store}
                 />
             );
         });
@@ -23,7 +22,7 @@ class SidebarSection extends Component {
         if ( !this.props.history.location.pathname.includes("/note/") ) {
             return (
             <Link 
-                to={`/addfolder/`}
+                to={`/add-folder/`}
                 className="folder--item--add"
             >
                 Add Folder
@@ -61,4 +60,4 @@ class SidebarSection extends Component {
     }
 }
 
-export default SidebarSection;
+export default withRouter(SidebarSection);

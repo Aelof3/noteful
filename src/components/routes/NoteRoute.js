@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MainSection from '../sections/MainSection';
 import SidebarSection from '../sections/SidebarSection';
+import { withRouter } from 'react-router-dom';
+import ErrorBoundary from '../../errors/ErrorBoundary';
 
 class NoteRoute extends Component {
     render(){
@@ -10,19 +12,20 @@ class NoteRoute extends Component {
         }
         return (
             <div className="App">
-                              
-                <SidebarSection 
-                    store={store}
-                    history={this.props.history}
-                />
-                <MainSection 
-                    store={store}
-                    history={this.props.history}
-                />
+                <ErrorBoundary message="Sidebar Section Error">
+                    <SidebarSection 
+                        store={store}
+                    />
+                </ErrorBoundary>
+                <ErrorBoundary message="Main Section Error">
+                    <MainSection 
+                        store={store}
+                    />
+                </ErrorBoundary>
 
             </div>
        );
     }
 }
 
-export default NoteRoute;
+export default withRouter(NoteRoute);

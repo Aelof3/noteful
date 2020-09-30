@@ -24,6 +24,7 @@ header {
 
 header a {
   text-decoration: none;
+  text-align: left;
 }
 
 header a h1 {
@@ -41,6 +42,9 @@ header a h1 {
 
 .App {
   text-align: center;
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
 }
 
 .App-logo {
@@ -92,11 +96,26 @@ header a h1 {
 
 
 
-div.App {
-  display: flex;
-  min-height: 100%;
+.header--spacer {
+  flex:1;
 }
 
+.header--title {
+  flex:3;
+}
+
+.error {
+  display: flex;
+  margin: 2rem 0;
+}
+.error--spacer{
+  flex:1;
+}
+.error--message{
+  flex:3;
+  font-size: 4rem;
+  font-weight: 300;
+}
 
 .section--sidebar {
   flex:1;
@@ -119,6 +138,7 @@ li.folder--item {
   flex: 0 1;
   padding: 1.5rem;
   border: 2px solid #000;
+  position: relative;
 }
 li.folder--item a {
   font-size: 1.5rem;
@@ -156,6 +176,30 @@ li.folder--item a {
   font-weight: 400;
   font-size: 1.75rem;
 }
+li.folder--item button.folder--item--delete {
+  position: absolute;
+  top: 10px;
+  right:20px;
+  border:none;
+  background:none;
+  font-size:0;
+  cursor: pointer;
+}
+li.folder--item button.folder--item--delete::after {
+  content: '';
+  position: absolute;
+  top:0;
+  left:0;
+  width:25px;
+  height: 25px;
+  border:none;
+  background-image: url(./images/bin.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+
 
 .section--main {
   flex:3;
@@ -214,4 +258,52 @@ main > .section--row {
 .note--item--content {
   text-align: left;
   margin: 0.5rem;
+}
+
+
+
+.add--form{
+  display:flex;
+  flex-flow: column;
+}
+
+.add--form--field{
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  margin: 0.5rem 0;
+}
+.add--form--field input, .add--form--field textarea, .add--form--field select{
+  width: 100%;
+  max-width: 850px;
+  font-size: 1.25rem;
+  padding: 0.25rem;
+  border: 2px solid #000;
+  background:none;
+}
+.add--form--field label {
+  font-size: 1.25rem;
+}
+.add--form--field select {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.add--form--field button{
+  width: 100%;
+  max-width:450px;
+  font-size:1.25rem;
+  padding:1rem;
+  background:none;
+  box-shadow:none;
+  outline: none;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
+
+@media all and (min-width:800px) {
+  .App {
+    flex-flow: row;
+  }
 }
