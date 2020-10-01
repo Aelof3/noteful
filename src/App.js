@@ -4,6 +4,7 @@ import './App.css';
 import FolderRoute from './components/routes/FolderRoute';
 import MainRoute from './components/routes/MainRoute';
 import NoteRoute from './components/routes/NoteRoute';
+import NotFoundRoute from './components/routes/NotFoundRoute';
 import AddFolder from './components/AddFolder';
 import AddNote from './components/AddNote';
 import HeaderSection from './components/sections/HeaderSection';
@@ -83,15 +84,7 @@ class App extends Component {
                 render={()=><AddNote store={this.state.store}/>}
               />
               <Route 
-                render={()=>{
-                    return (
-                      <div class="error">
-                        <div class="error--spacer"></div>
-                        <h2 class="error--message">404 Not Found</h2>
-                      </div>
-                    )
-                  }
-                }
+                render={()=><NotFoundRoute />}
               />
             </Switch>
         </BrowserRouter>
