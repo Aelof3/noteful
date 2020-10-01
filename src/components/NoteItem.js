@@ -15,7 +15,10 @@ class NoteItem extends Component {
           .then( r=>{
             this.context.updateStore();
             this.props.history.push('/');
-          });
+          })
+          .catch( e => {
+              throw new Error(`Error deleting note: ${e.message}`);
+          } );;
     }
     render(){
         const { id, name, modified, folderId, content, history } = this.props;

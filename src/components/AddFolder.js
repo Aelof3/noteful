@@ -10,6 +10,7 @@ class AddFolder extends Component {
     handleOnSumbit = (form) => {
         let f = new FormData(form);
         let name = f.get("folderName");
+        if ( typeof name !== "string" || name.length <= 0 ) return;
         this.addFolder({name:name});
     }
     addFolder = (data) => {
@@ -23,6 +24,9 @@ class AddFolder extends Component {
         .then( r => {
             this.context.updateStore();
             this.props.history.push('/');
+        } )
+        .catch( e => {
+            throw new Error("Error creating folder");
         } );
     }
     render() {
@@ -45,7 +49,7 @@ class AddFolder extends Component {
                         >   
                             <div className="add--form--field">
                                 <label htmlFor="folderName">Folder name:</label>
-                                <input type="text" id="folderName" name="folderName" />
+                                <input type="text" id="folderName" name="folderName" required />
                             </div>
                             <button type="submit">Submit</button>
                         </form>

@@ -36,6 +36,9 @@ class App extends Component {
           }
         });
       })
+      .catch( e => {
+          throw new Error(`Error retrieving folders: ${e.message}`);
+      } );
   }
   getNotes = () => {
     fetch(`${this.state.url}/notes`)
@@ -48,6 +51,9 @@ class App extends Component {
           }
         });
       })
+      .catch( e => {
+          throw new Error(`Error retrieving notes: ${e.message}`);
+      } );
   }
   componentDidMount(){
     this.updateStore();

@@ -15,7 +15,10 @@ class FolderItem extends Component {
           })
           .then( r=>{
             this.context.updateStore();
-          });
+          })
+          .catch( e => {
+              throw new Error(`Error deleting note: ${e.message}`);
+          } );;
     }
     deleteFolder = (id) => {
         fetch(`${this.context.url}/folders/${id}`, {
@@ -27,7 +30,10 @@ class FolderItem extends Component {
         .then( r => {
             this.context.updateStore();
             this.props.history.push('/');
-        } );
+        } )
+        .catch( e => {
+            throw new Error(`Error deleting folder: ${e.message}`);
+        } );;
     }
     getRidOfMe = () => {
         // remove all notes with this folder id

@@ -7,6 +7,16 @@ import PropTypes from 'prop-types';
 
 class AddNote extends Component {
     static contextType = DefaultContext;
+    handleOnSumbit = (form) => {
+        let f = new FormData(form);
+        let data = {
+            name: f.get("noteName"),
+            modified: new Date().toISOString(),
+            content: f.get("noteContent"),
+            folderId: f.get("folderId")
+        }
+        this.addNote(data);
+    }
     addNote = (data) => {
         fetch(`${this.context.url}/notes/`, {
             method: 'POST',
@@ -18,17 +28,10 @@ class AddNote extends Component {
         .then( r=>{
             this.context.updateStore();
             this.props.history.push('/');
-        });
-    }
-    handleOnSumbit = (form) => {
-        let f = new FormData(form);
-        let data = {
-            name: f.get("noteName"),
-            modified: new Date().toISOString(),
-            content: f.get("noteContent"),
-            folderId: f.get("folderId")
-        }
-        this.addNote(data);
+        })
+        .catch( e => {
+            throw new Error("Error creating note");
+        } );
     }
     getFolderList = () => {
         if ( typeof this.props.store !== "object" || this.props.history.location.pathname.includes("/note/") ) return;
