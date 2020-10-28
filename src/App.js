@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import FolderRoute from './components/routes/FolderRoute';
 import MainRoute from './components/routes/MainRoute';
@@ -19,7 +19,8 @@ class App extends Component {
       folders: [],
       notes: []
     },
-    url: 'http://localhost:8000'
+    url: 'https://rocky-dawn-01034.herokuapp.com'
+    //url: 'http://localhost:8000'
   }
   updateStore = () => {
     this.getFolders();
@@ -66,7 +67,7 @@ class App extends Component {
 
     return (
       <DefaultContext.Provider value={contextValue}>
-          <BrowserRouter >
+          <HashRouter >
             <HeaderSection />
             <Switch>
               <Route 
@@ -93,7 +94,7 @@ class App extends Component {
                 render={()=><NotFoundRoute />}
               />
             </Switch>
-        </BrowserRouter>
+        </HashRouter>
       </DefaultContext.Provider>
     );
   }
