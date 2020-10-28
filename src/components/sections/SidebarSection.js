@@ -43,7 +43,6 @@ class SidebarSection extends Component {
             const folder = this.props.store.folders.find( folder => {
                 return folder.id === this.props.store.notes[0].folderId
             } );
-            console.log(folder);
             return (
                 <h3>Folder: {folder.name}</h3>
             )
