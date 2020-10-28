@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 class AddNote extends Component {
     static contextType = DefaultContext;
     handleOnSumbit = (form) => {
-        let f = new FormData(form);
-        let data = {
+        const f = new FormData(form);
+        const data = {
             name: f.get("noteName"),
             modified: new Date().toISOString(),
             content: f.get("noteContent"),

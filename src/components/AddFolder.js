@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 class AddFolder extends Component {
     static contextType = DefaultContext;
     handleOnSumbit = (form) => {
-        let f = new FormData(form);
-        let name = f.get("folderName");
+        const f = new FormData(form);
+        const name = f.get("folderName");
         if ( typeof name !== "string" || name.length <= 0 ) return;
         this.addFolder({name:name});
     }

@@ -40,9 +40,10 @@ class SidebarSection extends Component {
     }
     getFolderName = () => {
         if (this.props.history.location.pathname.includes("/note/")) {
-            let folder = this.props.store.folders.find( folder => {
+            const folder = this.props.store.folders.find( folder => {
                 return folder.id === this.props.store.notes[0].folderId
             } );
+            console.log(folder);
             return (
                 <h3>Folder: {folder.name}</h3>
             )

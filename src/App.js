@@ -19,7 +19,7 @@ class App extends Component {
       folders: [],
       notes: []
     },
-    url: 'http://localhost:9090'
+    url: 'http://localhost:8000'
   }
   updateStore = () => {
     this.getFolders();
@@ -60,8 +60,8 @@ class App extends Component {
   }
   render(){
     const contextValue = {
-      updateStore: this.updateStore,
-      url: this.state.url
+      ...this.state,
+      updateStore: this.updateStore
     }
 
     return (

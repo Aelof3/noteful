@@ -2,7 +2,7 @@ import React from 'react';
 
 const DefaultContext = React.createContext({
     updateStore: () => {},
-    url: 'http://localhost:9090'
+    url: 'http://localhost:8000'
 })
 
 export default DefaultContext;

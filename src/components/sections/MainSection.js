@@ -19,6 +19,7 @@ class MainSection extends Component {
                     modified={note.modified}
                     folderId={note.folderId}
                     content={note.content}
+                    store={this.props.store}
                 />
             );
         });
